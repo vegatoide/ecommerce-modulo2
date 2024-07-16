@@ -28,6 +28,7 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       navigate('/');
+      alert('You have succesfuly logged in!');
     } catch (error) {
       alert(error.message);
     }

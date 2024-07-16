@@ -105,11 +105,57 @@
     transform: scale(1.01);
   }
 
-  .gameName {
-    justify-content: space-evenly;
+  h2 {
+    display: flex;
+    justify-content: center;
   }
 
-  .div {
+  .gameId {
+    opacity: 50%;
+    display: flex;
     justify-content: space-evenly;
+    align-items: space-evenly;
   }
 
+  .gameAlign {
+    display: flex;
+    justify-content: space-around;
+    align-items: space-around;
+    
+  }
+
+  h1 {
+    display: flex; 
+    justify-content: center;
+  }
+
+  .gamePhoto {
+    display: flex;
+    justify-content: center;
+    width: auto;
+    height: auto;
+  }
+
+  .gamePrice {
+    display: flex;
+    justify-content: center;
+  }
+
+  .gameA {
+    display: grid;
+    justify-content: space-around;
+    padding: 20px;
+    max-width: calc(100% - 40px);
+    box-shadow: 0px 7px 7px rgba(0,0,0,0.1);
+    overflow-x: auto;
+  }
+
+  .buyButton{
+    display: flex;
+    justify-content: center;
+  }
+
+  .gameDescription{
+    box-shadow: 7px 7px 7px rgba(0,0,0,0.1);
+    margin: 1cm;
+  }

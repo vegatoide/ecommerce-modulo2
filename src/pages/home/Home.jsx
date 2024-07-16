@@ -1,30 +1,32 @@
 import React from 'react';
 import { games } from '/src/resources/db/games';
-import {  Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const Home = () => {
     return (
     <>
-      <h1>Home</h1>
+      <h1 className='homeTitle'>Home</h1>
+      <div className='gameAlign'>
       {games.map((game) => (
-      <Link to={game.link}>
-      <div className='items-center'  key={game.id}>
+      <Link to={game.link} className='gameA'>
+      <div className='gameMap'  key={game.id}>
         <div className='gameName'>
-          <h2>
+          <h2 className='gameTitle'>
             {game.name}
           </h2>
         </div>
+        <div className='gameId'><span>Id:{game.id}</span></div>
         <div className='gamePhoto'>
           <img src={game.photo}></img>
         </div>
         <div className='gamePrice'>
-          <p>{game.price}</p>
+          <button>{game.price}</button>
         </div>
       </div>
       </Link>
-      ))}
-
+      ))};
+    </div>
     </>
     );
   };

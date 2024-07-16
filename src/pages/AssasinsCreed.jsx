@@ -6,6 +6,7 @@ const AssasinsCreed = () => {
 
     return(
         <>
+    <div className='gameAlign'>
         {actualGame.map((game) =>(
     <div className='items-center'  key={game.id}>
         <div className='gameName'>
@@ -14,7 +15,7 @@ const AssasinsCreed = () => {
           </h2>
         </div>
         <div className='gamePhoto'>
-          <img src={game.photo}></img>
+          <img src={game.photo} className='gameImg'></img>
         </div>
         <div className='gamePrice'>
           <p>{game.price}</p>
@@ -22,9 +23,10 @@ const AssasinsCreed = () => {
         <div className='gameDescription'>
           <p>{game.description}</p>
         </div>
-        <button>Buy</button>
+        <button className='buyButton'>Buy</button>
     </div>
         ))};
+        </div>
         </>
     )
     }
