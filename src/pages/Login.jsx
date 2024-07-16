@@ -1,17 +1,20 @@
 import { useForm } from "react-hook-form";
 import { string, object } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { auth } from "/src/resources/firebase.js";
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from "firebase/auth";
 import './LoginStyles.css';
 
 const Login = () => {
-  const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
-  // min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
   const schema = object({
-    username: string()
-      .required("Name is required"),
+    email: string().email("Invalid email")
+      .required("An email is required."),
     password: string()
-      .required("Password is required"),
+      .required("A Password is required."),
   });
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -21,9 +24,13 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    window.alert(`Welcome, ${data.username}!`);
+  const onSubmit = async (data) => {
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      navigate('/');
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -36,16 +43,16 @@ const Login = () => {
       >
         <div className="d-flex">
           <label htmlFor="name" className="label">
-            User <span>&#58;</span>
+            Email <span>&#58;</span>
           </label>
           <div className="d-flex flex-col input-field">
             <input
-              type="text"
-              {...register("username")}
+              type="email"
+              {...register("email")}
               className="input"
-              id="name"
+              id="email"
             />
-            <p className="errorinput">{errors.username?.message}</p>
+            <p className="errorinput">{errors.email?.message}</p>
           </div>
         </div>
         <div className="d-flex">
@@ -67,12 +74,6 @@ const Login = () => {
           Sign In
         </button>
       </form>
-      <a
-        href="https://github.com/MrYogesh0709/registraion-form"
-        target="_blank"
-        rel="noreferrer"
-      >
-      </a>
     </div>
   );
 }
