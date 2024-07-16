@@ -6,7 +6,18 @@ import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import './LoginStyles.css';
 
+import React, { useState } from 'react';
+import { useAuth } from '/src/resources/context/AuthContext';
+
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { login } = useAuth();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(email, password);
+  };
   const schema = object({
     email: string().email("Invalid email")
       .required("An email is required."),
@@ -14,25 +25,13 @@ const Login = () => {
       .required("A Password is required."),
   });
 
-  const navigate = useNavigate();
-
   const {
     register,
-    handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data) => {
-    try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
-      navigate('/');
-      alert('You have succesfuly logged in!');
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 
   return (
     <div className="app">
@@ -40,7 +39,7 @@ const Login = () => {
       <div className="line"></div>
       <form
         className="mt-2 d-flex flex-col gap-2"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit}
       >
         <div className="d-flex">
           <label htmlFor="name" className="label">
@@ -52,6 +51,7 @@ const Login = () => {
               {...register("email")}
               className="input"
               id="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <p className="errorinput">{errors.email?.message}</p>
           </div>
@@ -67,6 +67,7 @@ const Login = () => {
               {...register("password")}
               id="password"
               className="input"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <p className="errorinput">{errors.password?.message}</p>
           </div>
@@ -77,6 +78,6 @@ const Login = () => {
       </form>
     </div>
   );
-}
+};
 
 export default Login;

@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { auth, db } from "/src/resources/firebase.js";
 import { doc, setDoc } from "firebase/firestore"
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { Navigate } from "react-router";
 
 
 const RegisterF = () => {
@@ -37,7 +38,8 @@ const RegisterF = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
       
       console.log('User created:', userCredential.user);
-  
+      window.alert('You have been registered.')
+      Navigate("/")
       await setDoc(doc(db, "users", data.email), data);
     } catch (err) {
       const errorCode = err.code;
